@@ -8,11 +8,12 @@
   "plugins": [
     [
       "expo-router",
+      "@prisma/react-native",
       {
         "origin": "https://n"
       }
     ]
   ],
-  "name": "app-adetur",
+  "name": "Adetur - Agência de Desenvolvimento Turistico da Alta Mogiana",
   "slug": "app-adetur"
 }
