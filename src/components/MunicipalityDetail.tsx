@@ -11,11 +11,10 @@ import {
   useMunicipality,
   useMunicipalityGeoJson,
 } from "@/hooks/useMunicipalities";
-import MunicipioMap from "@/app/cities/components/MunicipioMap";
+import MunicipioMap from "./MunicipioMap";
 import { Highlight, Image as MunicipalityImage } from "@/types/Cities";
 import { ThemedView } from "./ThemedView";
 import { ThemedText } from "./ThemedText";
-import Carousel from "react-native-snap-carousel";
 import MapView from "react-native-maps";
 import { RenderHtml } from "./RenderHtml";
 
@@ -31,7 +30,6 @@ export function MunicipalityDetail({
   const { municipality, loading, error } = useMunicipality(municipalitySlug); // Passando municipalitySlug
   const { geojson } = useMunicipalityGeoJson(municipality?.ibgeCode);
   const mapRef = useRef<MapView>(null);
-  const carouselRef = useRef<Carousel<MunicipalityImage>>(null);
 
   if (loading) {
     return (
@@ -67,7 +65,7 @@ export function MunicipalityDetail({
 
   const renderCarouselItem = ({ item }: { item: MunicipalityImage }) => {
     return (
-      <ThemedView style={styles.carouselItem}>
+      <ThemedView style={styles.carouselItemContainer}>
         <Image source={{ uri: item.url }} style={styles.headerImage} />
       </ThemedView>
     );
@@ -86,15 +84,14 @@ export function MunicipalityDetail({
     <ScrollView>
       {/* 1. Image Slider */}
       {municipality.images && municipality.images.length > 0 && (
-        <Carousel
-          style={{ marginBottom: 16 }}
-          ref={carouselRef}
+        <FlatList
           data={municipality.images}
           renderItem={renderCarouselItem}
-          sliderWidth={screenWidth}
-          itemWidth={screenWidth}
-          loop
-          autoplay
+          keyExtractor={(item) => item.id}
+          horizontal
+          pagingEnabled
+          showsHorizontalScrollIndicator={false}
+          style={styles.carouselContainer}
         />
       )}
 
@@ -157,7 +154,11 @@ const styles = StyleSheet.create({
   errorText: {
     textAlign: "center",
   },
-  carouselItem: {
+  carouselContainer: {
+    height: 250,
+    marginBottom: 16,
+  },
+  carouselItemContainer: {
     width: screenWidth,
     height: 250,
   },

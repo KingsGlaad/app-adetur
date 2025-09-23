@@ -3,16 +3,12 @@ import { ActivityIndicator } from "react-native";
 import { MunicipalityDetail } from "../../components/MunicipalityDetail";
 import { ThemedView } from "@/components/ThemedView";
 import { ThemedText } from "@/components/ThemedText";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-/**
- * This is the screen file for the dynamic route /cities/[slug].
- * It extracts the 'slug' from the URL and passes it to the detail component.
- */
 export default function MunicipalityDetailsPage() {
   const { slug } = useLocalSearchParams();
+  const { top } = useSafeAreaInsets();
 
-  // Ensure slug is a string before using it. This handles cases where the
-  // URL might be malformed or the param is not yet available.
   if (typeof slug !== "string") {
     return (
       <ThemedView
@@ -24,5 +20,9 @@ export default function MunicipalityDetailsPage() {
     );
   }
 
-  return <MunicipalityDetail municipalitySlug={slug} />;
+  return (
+    <ThemedView style={{ flex: 1, paddingTop: top }}>
+      <MunicipalityDetail municipalitySlug={slug} />
+    </ThemedView>
+  );
 }
