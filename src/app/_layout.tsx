@@ -1,37 +1,32 @@
-import { Tabs } from "expo-router";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import {
+  DarkTheme,
+  DefaultTheme,
+  ThemeProvider,
+} from "@react-navigation/native";
+import { Stack } from "expo-router";
+import * as SplashScreen from "expo-splash-screen";
+import { StatusBar } from "expo-status-bar";
+import { useEffect } from "react";
+import "react-native-reanimated";
 
-export default function TabLayout() {
+import { useColorScheme } from "../hooks/useColorScheme";
+
+SplashScreen.preventAutoHideAsync();
+
+export default function RootLayout() {
+  const colorScheme = useColorScheme();
+
+  useEffect(() => {
+    SplashScreen.hideAsync();
+  }, []);
+
   return (
-    <Tabs screenOptions={{ tabBarActiveTintColor: "hls(var(--primary))" }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: "Home",
-          headerShown: false,
-          tabBarIcon: ({ size, color, focused }) => (
-            <MaterialIcons
-              size={size}
-              name={focused ? "home" : "home-filled"}
-              color={color}
-            />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="tracks/index"
-        options={{
-          title: "Rotas",
-          headerShown: false,
-          tabBarIcon: ({ size, color, focused }) => (
-            <MaterialIcons
-              size={size}
-              name={focused ? "map" : "route"}
-              color={color}
-            />
-          ),
-        }}
-      />
-    </Tabs>
+    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+      <Stack>
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="cities" options={{ headerShown: false }} />
+      </Stack>
+      <StatusBar style="auto" />
+    </ThemeProvider>
   );
 }

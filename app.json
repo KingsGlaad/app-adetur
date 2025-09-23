@@ -1,19 +1,27 @@
 {
   "scheme": "acme",
   "userInterfaceStyle": "automatic",
-  "orientation": "default",
+  "orientation": "portrait",
+  "splash": {
+    "image": "./src/assets/images/logo-adetur.png",
+    "resizeMode": "contain",
+    "backgroundColor": "#ffffff"
+  },
   "web": {
     "output": "static"
   },
   "plugins": [
     [
       "expo-router",
-      "@prisma/react-native",
       {
         "origin": "https://n"
       }
-    ]
+    ],
+    "expo-web-browser"
   ],
   "name": "Adetur - Agência de Desenvolvimento Turistico da Alta Mogiana",
-  "slug": "app-adetur"
+  "slug": "app-adetur",
+  "android": {
+    "package": "com.kingsglaad.appadetur"
+  }
 }
