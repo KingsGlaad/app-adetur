@@ -2,6 +2,7 @@ export interface Highlight {
   id: string;
   title: string;
   description: string;
+  image: string;
   latitude: number;
   longitude: number;
   municipalityId: string;
@@ -27,6 +28,7 @@ export interface Event {
   title: string;
   date: string; // ISO date string
   description: string;
+  image?: string;
 }
 
 export interface Guide {

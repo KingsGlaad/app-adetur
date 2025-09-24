@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Image, TextInput, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { MunicipalityList } from "@/components/MunicipalityList";
+import { MunicipalityList } from "@/components/municipio/MunicipalityList";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { ThemedView } from "@/components/ThemedView";
+import { ThemedView } from "@/components/theme/ThemedView";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { Colors } from "@/constants/Colors";
 

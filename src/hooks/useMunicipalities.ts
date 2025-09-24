@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { Municipality, MunicipalityListItem } from "@/types/Cities";
 
-const API_URL = process.env.EXPO_PUBLIC_API_URL;
+const API_URL = "https://adetur-gestao.vercel.app/api"; //process.env.EXPO_PUBLIC_API_URL;
 
 export function useMunicipalities(searchQuery: string = "") {
   // Estado para armazenar a lista completa de municípios, sem filtro.
