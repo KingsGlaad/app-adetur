@@ -1,0 +1,7 @@
+node_modules
+ios/build
+android/build
+.git
+.expo
+*.mp4
+*.zip

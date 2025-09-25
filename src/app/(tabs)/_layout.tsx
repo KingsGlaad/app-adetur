@@ -1,26 +1,38 @@
 import { Tabs } from "expo-router";
-import React from "react";
+import React, { useEffect } from "react";
+import { MaterialIcons } from "@expo/vector-icons";
+import { useColorScheme } from "@/hooks/useColorScheme";
+import { Colors } from "@/constants/Colors";
 import { Platform } from "react-native";
-
 import { HapticTab } from "@/components/utils/HapticTab";
 import TabBarBackground from "@/components/ui/TabBarBackground";
-import { Colors } from "@/constants/Colors";
-import { useColorScheme } from "@/hooks/useColorScheme";
-import { MaterialIcons } from "@expo/vector-icons";
+import * as Location from "expo-location";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
 
+  // Efeito para solicitar a permissão de localização ao iniciar o app
+  useEffect(() => {
+    const requestLocationPermission = async () => {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        // Opcional: Você pode mostrar um alerta aqui informando ao usuário
+        // que a permissão é necessária para algumas funcionalidades.
+        console.log("Permissão de localização negada.");
+      }
+    };
+    requestLocationPermission();
+  }, []); // O array vazio garante que isso rode apenas uma vez.
+
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
         headerShown: false,
+        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
         tabBarButton: HapticTab,
         tabBarBackground: TabBarBackground,
         tabBarStyle: Platform.select({
           ios: {
-            // Use a transparent background on iOS to show the blur effect
             position: "absolute",
           },
           default: {},
@@ -30,26 +42,18 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Home",
-          tabBarIcon: ({ focused, color, size }) => (
-            <MaterialIcons
-              name={focused ? "home" : "home-filled"}
-              size={size}
-              color={color}
-            />
+          title: "Início",
+          tabBarIcon: ({ color, size }) => (
+            <MaterialIcons name={"home"} size={size} color={color} />
           ),
         }}
       />
       <Tabs.Screen
         name="tracks/index"
         options={{
-          title: "Explore",
-          tabBarIcon: ({ focused, color, size }) => (
-            <MaterialIcons
-              name={focused ? "route" : "map"}
-              size={size}
-              color={color}
-            />
+          title: "Explorar",
+          tabBarIcon: ({ color, size }) => (
+            <MaterialIcons name="map" size={size} color={color} />
           ),
         }}
       />
