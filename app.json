@@ -27,8 +27,7 @@
     "adaptiveIcon": {
       "foregroundImage": "./src/assets/images/logo-adetur.png",
       "backgroundColor": "#FFFFFF"
-    },
-    "edgetoEdgeEnabled": true
+    }
   },
   "extra": {
     "router": {
