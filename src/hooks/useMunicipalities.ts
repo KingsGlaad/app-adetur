@@ -1,7 +1,12 @@
-import { useState, useEffect, useMemo } from "react";
-import { Municipality, MunicipalityListItem } from "@/types/Cities";
+import { useState, useEffect, useMemo, useCallback } from "react";
+import {
+  Municipality,
+  MunicipalityListItem,
+  PopularHighlight,
+} from "@/types/Cities";
 
-const API_URL = "https://adetur-gestao.vercel.app/api"; //process.env.EXPO_PUBLIC_API_URL;
+//const API_URL = "http://192.168.0.7:3000/api";
+const API_URL = process.env.EXPO_PUBLIC_API_URL;
 
 export function useMunicipalities(searchQuery: string = "") {
   // Estado para armazenar a lista completa de municípios, sem filtro.
@@ -123,4 +128,53 @@ export function useMunicipalityGeoJson(ibgeCode?: string) {
   }, [ibgeCode]);
 
   return { geojson, loading, error };
+}
+
+/**
+ * Hook para buscar destaques (pontos turísticos) de forma aleatória.
+ */
+export function useRandomHighlights() {
+  const [highlights, setHighlights] = useState<PopularHighlight[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const loadRandomHighlights = useCallback(async () => {
+    try {
+      setLoading(true);
+      // Assumindo que sua API tem um endpoint para destaques aleatórios
+      const response = await fetch(`${API_URL}/highlights/random`);
+      if (!response.ok) {
+        throw new Error(`Falha na resposta da rede: ${response.statusText}`);
+      }
+      const data = await response.json();
+
+      // Mapeia a resposta da API para a estrutura que o app espera
+      const formattedData = data.map((highlight: any) => ({
+        id: highlight.id,
+        title: highlight.title,
+        description: highlight.description,
+        // A API retorna 'galleryImages', o app espera 'images'
+        // E cada imagem precisa de um 'id' para o keyExtractor
+        images: highlight.galleryImages.map((img: any, index: number) => ({
+          id: `${highlight.id}-img-${index}`, // Cria um ID único para a chave
+          url: img.url,
+        })),
+        municipalityName: highlight.municipality.name,
+        municipalitySlug: highlight.municipality.slug,
+      }));
+      setHighlights(formattedData);
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : "Erro ao carregar destaques"
+      );
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    loadRandomHighlights();
+  }, []);
+
+  return { highlights, loading, error, refetch: loadRandomHighlights };
 }

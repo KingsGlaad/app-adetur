@@ -68,5 +68,26 @@ export interface Municipality {
  */
 export type MunicipalityListItem = Pick<
   Municipality,
-  "id" | "name" | "slug" | "description" | "coatOfArms"
+  | "id"
+  | "name"
+  | "slug"
+  | "description"
+  | "coatOfArms"
+  | "latitude"
+  | "longitude"
 >;
+
+/**
+ * Representa a estrutura de um destaque popular,
+ * retornada pela API para a tela de exploração.
+ */
+export interface PopularHighlight {
+  id: string;
+  title: string;
+  description: string;
+  images: Image[];
+  image: string;
+  city: string;
+  municipalityName: string;
+  municipalitySlug: string;
+}
