@@ -8,7 +8,6 @@
     "resizeMode": "contain",
     "backgroundColor": "#ffffff"
   },
-
   "web": {
     "output": "static"
   },
@@ -38,5 +37,12 @@
     "eas": {
       "projectId": "10466db4-1d43-4757-a250-bf52e61272c4"
     }
-  }
+  },
+  "runtimeVersion": {
+    "policy": "appVersion"
+  },
+  "updates": {
+    "url": "https://u.expo.dev/10466db4-1d43-4757-a250-bf52e61272c4"
+  },
+  "ios": {}
 }

@@ -1,7 +1,6 @@
 node_modules
+.git
 ios/build
 android/build
-.git
-.expo
-*.mp4
 *.zip
+*.mp4
