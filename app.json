@@ -1,5 +1,6 @@
 {
   "scheme": "adetur",
+  "version": "1.0.0",
   "userInterfaceStyle": "automatic",
   "orientation": "portrait",
   "icon": "./src/assets/images/logo-adetur.png",
